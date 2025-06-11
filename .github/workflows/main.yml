@@ -24,6 +24,7 @@ jobs:
       - name: Setup
         run: |
           brew install cmake ninja
+          arch -x86_64 brew reinstall glib
           rm -rf musescore_deps_macos
           rm -rf build
 
@@ -42,6 +43,7 @@ jobs:
         run: |
           cd build/libogg-${OGG_VERSION}
           cmake -B build -G Ninja \
+            -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../musescore_deps_macos \
             -DCMAKE_INSTALL_PREFIX=../../musescore_deps_macos \
@@ -95,6 +97,7 @@ jobs:
         run: |
           cd build/libvorbis-${VORBIS_VERSION}
           cmake -B build -G Ninja \
+            -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../musescore_deps_macos \
             -DCMAKE_INSTALL_PREFIX=../../musescore_deps_macos \
@@ -142,6 +145,7 @@ jobs:
         run: |
           cd build/libsndfile-${LIBSNDFILE_VERSION}
           cmake -B build -G Ninja \
+            -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../musescore_deps_macos \
             -DCMAKE_INSTALL_PREFIX=../../musescore_deps_macos \
