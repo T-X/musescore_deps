@@ -1,0 +1,11 @@
+prefix=/Users/runner/work/musescore_deps/musescore_deps/musescore_deps_macos
+exec_prefix=${prefix}
+libdir=/Users/runner/work/musescore_deps/musescore_deps/musescore_deps_macos/lib
+includedir=/Users/runner/work/musescore_deps/musescore_deps/musescore_deps_macos/include/libinstpatch-2
+
+Name: libInstPatch
+Description: MIDI instrument patch library
+Version: 1.1.7
+Requires: glib-2.0 gobject-2.0 gthread-2.0 sndfile
+Libs: -L${libdir} -linstpatch-1.0
+Cflags: -I${includedir}
