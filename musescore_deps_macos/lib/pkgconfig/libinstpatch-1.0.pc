@@ -1,7 +1,7 @@
-prefix=/Users/runner/work/musescore_deps_macos
+prefix=/Users/runner/musescore_deps_macos
 exec_prefix=${prefix}
-libdir=/Users/runner/work/musescore_deps_macos/lib
-includedir=/Users/runner/work/musescore_deps_macos/include/libinstpatch-2
+libdir=/Users/runner/musescore_deps_macos/lib
+includedir=/Users/runner/musescore_deps_macos/include/libinstpatch-2
 
 Name: libInstPatch
 Description: MIDI instrument patch library
