@@ -46,7 +46,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../../../../musescore_deps_macos \
             -DCMAKE_INSTALL_PREFIX=../../../../../musescore_deps_macos \
-            -DCMAKE_OSX_ARCHITECTURES="arm64" \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
             -DBUILD_SHARED_LIBS=ON \
             -DINSTALL_DOCS=OFF \
             -DCMAKE_MACOSX_RPATH=ON # Nowadays default, but ogg uses old minimum CMake version
@@ -71,7 +71,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../../../../musescore_deps_macos \
             -DCMAKE_INSTALL_PREFIX=../../../../../musescore_deps_macos \
-            -DCMAKE_OSX_ARCHITECTURES="arm64" \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
             -DBUILD_SHARED_LIBS=ON \
             -DBUILD_PROGRAMS=OFF \
             -DBUILD_EXAMPLES=OFF \
@@ -100,7 +100,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../../../../musescore_deps_macos \
             -DCMAKE_INSTALL_PREFIX=../../../../../musescore_deps_macos \
-            -DCMAKE_OSX_ARCHITECTURES="arm64" \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
             -DBUILD_SHARED_LIBS=ON \
             -DCMAKE_MACOSX_RPATH=ON # Nowadays default, but vorbis uses old minimum CMake version
           cmake --build build
@@ -124,7 +124,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../../../../musescore_deps_macos \
             -DCMAKE_INSTALL_PREFIX=../../../../../musescore_deps_macos \
-            -DCMAKE_OSX_ARCHITECTURES="arm64" \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
             -DBUILD_SHARED_LIBS=ON
           cmake --build build
           cmake --install build
@@ -148,7 +148,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../../../../musescore_deps_macos \
             -DCMAKE_INSTALL_PREFIX=../../../../../musescore_deps_macos \
-            -DCMAKE_OSX_ARCHITECTURES="arm64" \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
             -DBUILD_SHARED_LIBS=ON \
             -DBUILD_PROGRAMS=OFF \
             -DBUILD_EXAMPLES=OFF \
@@ -176,7 +176,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../../../../musescore_deps_macos \
             -DCMAKE_INSTALL_PREFIX=../../../../../musescore_deps_macos \
-            -DCMAKE_OSX_ARCHITECTURES="arm64" \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
             -DBUILD_SHARED_LIBS=ON \
             -DBUILD_PROGRAMS=OFF \
             -DBUILD_EXAMPLES=OFF \
