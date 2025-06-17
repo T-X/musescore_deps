@@ -164,6 +164,22 @@ jobs:
           cmake --install build
 
       #########################################################################
+      # glib
+      # - requirement of libInstPatch
+      #########################################################################
+
+      - name: glib - Download binaries
+        run: |
+          cd ..
+          mkdir x86-homebrew
+          curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C x86-homebrew
+          alias x86-brew='$(pwd)/x86-homebrew/bin/brew'
+          response="$(x86-brew fetch --force --bottle-tag=sonoma glib | grep 'Downloaded to')"
+          x86-brew install "${response##*Downloaded to: }"
+          lipo -create $(brew --prefix glib)/lib/libglib-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib -output /Users/runner/musescore_deps_macos/lib/libglib-2.0.0.dylib
+          ln -s libglib-2.0.0.dylib /Users/runner/musescore_deps_macos/lib/libglib-2.0.dylib
+
+      #########################################################################
       # libInstPatch
       #########################################################################
 
