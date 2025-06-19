@@ -191,13 +191,23 @@ jobs:
       - name: glib - Create x86_64 + arm64 combined libraries
         run: |
           shopt -s expand_aliases
-          alias x86-brew="$(pwd)/../arm-homebrew/bin/brew"
-          lipo -create $(brew --prefix glib)/lib/libglib-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib -output $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib.new
-          mv $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib.new $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib
-          lipo -create $(brew --prefix glib)/lib/libgobject-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib -output $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib.new
-          mv $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib.new $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib
-          lipo -create $(brew --prefix glib)/lib/libgthread-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libgthread-2.0.0.dylib -output $(./x86-homebrew/bin/brew --prefix glib)/lib/libgthread-2.0.0.dylib.new
-          mv $(./x86-homebrew/bin/brew --prefix glib)/lib/libgthread-2.0.0.dylib.new $(./x86-homebrew/bin/brew --prefix glib)/lib/libgthread-2.0.0.dylib
+          alias x86-brew="$(pwd)/../x86-homebrew/bin/brew"
+          alias arm-brew="$(pwd)/../arm-homebrew/bin/brew"
+          lipo -create "$(x86-brew --prefix glib)/lib/libglib-2.0.0.dylib" \
+            "$(arm-brew --prefix glib)/lib/libglib-2.0.0.dylib" \
+            -output "$(x86-brew --prefix glib)/lib/libglib-2.0.0.dylib.new"
+          mv "$(x86-brew --prefix glib)/lib/libglib-2.0.0.dylib.new" \
+             "$(x86-brew --prefix glib)/lib/libglib-2.0.0.dylib"
+          lipo -create "$(x86-brew --prefix glib)/lib/libgobject-2.0.0.dylib" \
+            "$(arm-brew --prefix glib)/lib/libgobject-2.0.0.dylib" \
+            -output "$(x86-brew --prefix glib)/lib/libgobject-2.0.0.dylib.new"
+          mv "$(x86-brew --prefix glib)/lib/libgobject-2.0.0.dylib.new" \
+             "$(x86-brew --prefix glib)/lib/libgobject-2.0.0.dylib"
+          lipo -create "$(x86-brew --prefix glib)/lib/libgthread-2.0.0.dylib" \
+            "$(arm-brew --prefix glib)/lib/libgthread-2.0.0.dylib" \
+            -output "$(x86-brew --prefix glib)/lib/libgthread-2.0.0.dylib.new"
+          mv "$(x86-brew --prefix glib)/lib/libgthread-2.0.0.dylib.new" \
+             "$(x86-brew --prefix glib)/lib/libgthread-2.0.0.dylib"
 
       #########################################################################
       # libInstPatch
