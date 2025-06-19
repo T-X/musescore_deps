@@ -168,7 +168,7 @@ jobs:
       # - requirement of libInstPatch
       #########################################################################
 
-      - name: glib - Download binaries
+      - name: glib - Download x86_64 binaries
         run: |
           cd ..
           mkdir x86-homebrew
@@ -182,24 +182,30 @@ jobs:
           echo "~~~ x86-brew -h done"
           response="$(x86-brew fetch --force --bottle-tag=sonoma glib | grep 'Downloaded to')"
           x86-brew install "${response##*Downloaded to: }"
+
+      - name: glib - Download arm64 binaries
+        run: |
+          cd ..
+          mkdir arm-homebrew
+          curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C arm-homebrew
+          shopt -s expand_aliases
+          alias arm-brew="$(pwd)/arm-homebrew/bin/brew"
+          echo "~~~ Aliases:"
+          alias
+          echo "~~~ Aliases done, arm-brew -h"
+          arm-brew -h
+          echo "~~~ arm-brew -h done"
+          response="$(arm-brew fetch --force --bottle-tag=arm64_sonoma glib | grep 'Downloaded to')"
+          arm-brew install "${response##*Downloaded to: }"
+
+      - name: glib - Create x86_64 + arm64 combined libraries
+        run: |
           lipo -create $(brew --prefix glib)/lib/libglib-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib -output $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib.new
           mv $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib.new $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib
           lipo -create $(brew --prefix glib)/lib/libgobject-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib -output $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib.new
           mv $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib.new $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib
           lipo -create $(brew --prefix glib)/lib/libgthread-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libgthread-2.0.0.dylib -output $(./x86-homebrew/bin/brew --prefix glib)/lib/libgthread-2.0.0.dylib.new
           mv $(./x86-homebrew/bin/brew --prefix glib)/lib/libgthread-2.0.0.dylib.new $(./x86-homebrew/bin/brew --prefix glib)/lib/libgthread-2.0.0.dylib
-          #lipo -create $(brew --prefix glib)/lib/libglib-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib -output /Users/runner/musescore_deps_macos/lib/libglib-2.0.0.dylib
-          #ln -s libglib-2.0.0.dylib /Users/runner/musescore_deps_macos/lib/libglib-2.0.dylib
-          #cp -r /Users/runner/work/musescore_deps/x86-homebrew/include/glib-2.0 /Users/runner/musescore_deps_macos/include/
-          ## glib from /opt?
-          ## x86-brew --prefix glib -> /Users/runner/work/musescore_deps/x86-homebrew/opt/glib
-          #mkdir /Users/runner/musescore_deps_macos/opt
-          #cp -r "$(x86-brew --prefix glib)" /Users/runner/musescore_deps_macos/opt/
-          ##cp -r /Users/runner/work/musescore_deps/x86-homebrew/opt/glib/lib/pkgconfig/glib-2.0.p
-          ## glibconfig.h:
-          #cp -r /Users/runner/work/musescore_deps/x86-homebrew/lib/glib-2.0/ /Users/runner/musescore_deps_macos/lib/
-          ## galloca.h:
-          #sed "s#^prefix=.*#prefix=/Users/runner/musescore_deps_macos#" /Users/runner/work/musescore_deps/x86-homebrew/lib/pkgconfig/glib-2.0.pc > /Users/runner/musescore_deps_macos/lib/pkgconfig/glib-2.0.pc
 
       #########################################################################
       # libInstPatch
