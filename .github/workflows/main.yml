@@ -175,11 +175,6 @@ jobs:
           curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C x86-homebrew
           shopt -s expand_aliases
           alias x86-brew="$(pwd)/x86-homebrew/bin/brew"
-          echo "~~~ Aliases:"
-          alias
-          echo "~~~ Aliases done, x86-brew -h"
-          x86-brew -h
-          echo "~~~ x86-brew -h done"
           response="$(x86-brew fetch --force --bottle-tag=sonoma glib | grep 'Downloaded to')"
           x86-brew install "${response##*Downloaded to: }"
 
@@ -190,16 +185,13 @@ jobs:
           curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C arm-homebrew
           shopt -s expand_aliases
           alias arm-brew="$(pwd)/arm-homebrew/bin/brew"
-          echo "~~~ Aliases:"
-          alias
-          echo "~~~ Aliases done, arm-brew -h"
-          arm-brew -h
-          echo "~~~ arm-brew -h done"
           response="$(arm-brew fetch --force --bottle-tag=arm64_sonoma glib | grep 'Downloaded to')"
           arm-brew install "${response##*Downloaded to: }"
 
       - name: glib - Create x86_64 + arm64 combined libraries
         run: |
+          shopt -s expand_aliases
+          alias arm-brew="$(pwd)/../arm-homebrew/bin/brew"
           lipo -create $(brew --prefix glib)/lib/libglib-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib -output $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib.new
           mv $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib.new $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib
           lipo -create $(brew --prefix glib)/lib/libgobject-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib -output $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib.new
