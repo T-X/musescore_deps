@@ -199,10 +199,15 @@ jobs:
       - name: libinstpatch - Build
         run: |
           cd build/libinstpatch-${LIBINSTPATCH_VERSION}
+          echo "~~~ env:"
+          env
+          echo "~~~ Calling cmake"
+          export PKG_CONFIG_PATH=/Users/runner/work/musescore_deps/x86-homebrew/lib/pkgconfig:/Users/runner/musescore_deps_macos/lib/pkgconfig:/usr/lib/pkgconfig
           cmake -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../../../../musescore_deps_macos \
             -DCMAKE_INSTALL_PREFIX=../../../../../musescore_deps_macos \
+            -DCMAKE_EXE_LINKER_FLAGS="-L/Users/runner/work/musescore_deps/x86-homebrew/lib/" \
             -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
             -DBUILD_SHARED_LIBS=ON \
             -DBUILD_PROGRAMS=OFF \
@@ -210,7 +215,9 @@ jobs:
             -DBUILD_TESTING=OFF \
             -DBUILD_REGTEST=OFF \
             -DINSTALL_MANPAGES=OFF
-          cmake --build build
+          echo "~~~ Calling cmake build"
+          VERBOSE=1 cmake --build build
+          echo "~~~ Calling cmake install"
           cmake --install build
 
       #########################################################################
