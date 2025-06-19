@@ -182,11 +182,20 @@ jobs:
           echo "~~~ x86-brew -h done"
           response="$(x86-brew fetch --force --bottle-tag=sonoma glib | grep 'Downloaded to')"
           x86-brew install "${response##*Downloaded to: }"
-          lipo -create $(brew --prefix glib)/lib/libglib-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib -output /Users/runner/musescore_deps_macos/lib/libglib-2.0.0.dylib
-          ln -s libglib-2.0.0.dylib /Users/runner/musescore_deps_macos/lib/libglib-2.0.dylib
-          cp -r /Users/runner/work/musescore_deps/x86-homebrew/include/glib-2.0 /Users/runner/musescore_deps_macos/include/
-          cp -r /Users/runner/work/musescore_deps/x86-homebrew/lib/glib-2.0/ /Users/runner/musescore_deps_macos/lib/
-          sed "s#^prefix=.*#prefix=/Users/runner/musescore_deps_macos#" /Users/runner/work/musescore_deps/x86-homebrew/lib/pkgconfig/glib-2.0.pc > /Users/runner/musescore_deps_macos/lib/pkgconfig/glib-2.0.pc
+          lipo -create $(brew --prefix glib)/lib/libglib-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib -output $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib.new
+          mv $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib.new $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib
+          #lipo -create $(brew --prefix glib)/lib/libglib-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib -output /Users/runner/musescore_deps_macos/lib/libglib-2.0.0.dylib
+          #ln -s libglib-2.0.0.dylib /Users/runner/musescore_deps_macos/lib/libglib-2.0.dylib
+          #cp -r /Users/runner/work/musescore_deps/x86-homebrew/include/glib-2.0 /Users/runner/musescore_deps_macos/include/
+          ## glib from /opt?
+          ## x86-brew --prefix glib -> /Users/runner/work/musescore_deps/x86-homebrew/opt/glib
+          #mkdir /Users/runner/musescore_deps_macos/opt
+          #cp -r "$(x86-brew --prefix glib)" /Users/runner/musescore_deps_macos/opt/
+          ##cp -r /Users/runner/work/musescore_deps/x86-homebrew/opt/glib/lib/pkgconfig/glib-2.0.p
+          ## glibconfig.h:
+          #cp -r /Users/runner/work/musescore_deps/x86-homebrew/lib/glib-2.0/ /Users/runner/musescore_deps_macos/lib/
+          ## galloca.h:
+          #sed "s#^prefix=.*#prefix=/Users/runner/musescore_deps_macos#" /Users/runner/work/musescore_deps/x86-homebrew/lib/pkgconfig/glib-2.0.pc > /Users/runner/musescore_deps_macos/lib/pkgconfig/glib-2.0.pc
 
       #########################################################################
       # libInstPatch
@@ -207,7 +216,9 @@ jobs:
           echo "~~~ env:"
           env
           echo "~~~ Calling cmake"
-          export PKG_CONFIG_PATH=/Users/runner/musescore_deps_macos/lib/pkgconfig:/usr/lib/pkgconfig
+          # export PKG_CONFIG_PATH=/Users/runner/musescore_deps_macos/lib/pkgconfig:/usr/lib/pkgconfig
+          #export PKG_CONFIG_PATH=/Users/runner/musescore_deps_macos/opt/glib/lib/pkgconfig:/usr/lib/pkgconfig
+          export PKG_CONFIG_PATH=/Users/runner/work/musescore_deps/x86-homebrew/lib/pkgconfig:/usr/lib/pkgconfig
           cmake -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../../../../musescore_deps_macos \
