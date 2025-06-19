@@ -184,6 +184,10 @@ jobs:
           x86-brew install "${response##*Downloaded to: }"
           lipo -create $(brew --prefix glib)/lib/libglib-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib -output $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib.new
           mv $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib.new $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib
+          lipo -create $(brew --prefix glib)/lib/libgobject-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib -output $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib.new
+          mv $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib.new $(./x86-homebrew/bin/brew --prefix glib)/lib/libgobject-2.0.0.dylib
+          lipo -create $(brew --prefix glib)/lib/libgthread-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libgthread-2.0.0.dylib -output $(./x86-homebrew/bin/brew --prefix glib)/lib/libgthread-2.0.0.dylib.new
+          mv $(./x86-homebrew/bin/brew --prefix glib)/lib/libgthread-2.0.0.dylib.new $(./x86-homebrew/bin/brew --prefix glib)/lib/libgthread-2.0.0.dylib
           #lipo -create $(brew --prefix glib)/lib/libglib-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib -output /Users/runner/musescore_deps_macos/lib/libglib-2.0.0.dylib
           #ln -s libglib-2.0.0.dylib /Users/runner/musescore_deps_macos/lib/libglib-2.0.dylib
           #cp -r /Users/runner/work/musescore_deps/x86-homebrew/include/glib-2.0 /Users/runner/musescore_deps_macos/include/
