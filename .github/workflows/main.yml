@@ -196,6 +196,7 @@ jobs:
           tar xf build/libinstpatch-${LIBINSTPATCH_VERSION}.tar.gz -C build
           rm build/libinstpatch-${LIBINSTPATCH_VERSION}.tar.gz
 
+#            -DCMAKE_EXE_LINKER_FLAGS="-L/Users/runner/work/musescore_deps/x86-homebrew/lib/" \
       - name: libinstpatch - Build
         run: |
           cd build/libinstpatch-${LIBINSTPATCH_VERSION}
@@ -207,7 +208,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../../../../musescore_deps_macos \
             -DCMAKE_INSTALL_PREFIX=../../../../../musescore_deps_macos \
-            -DCMAKE_EXE_LINKER_FLAGS="-L/Users/runner/work/musescore_deps/x86-homebrew/lib/" \
+            -DCMAKE_EXE_LINKER_FLAGS="-L/Users/runner/musescore_deps_macos/lib/" \
             -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
             -DBUILD_SHARED_LIBS=ON \
             -DBUILD_PROGRAMS=OFF \
