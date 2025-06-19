@@ -1,7 +1,7 @@
-prefix=/Users/runner/work/musescore_deps/musescore_deps/musescore_deps_macos
+prefix=/Users/runner/musescore_deps_macos
 exec_prefix=${prefix}
-libdir=/Users/runner/work/musescore_deps/musescore_deps/musescore_deps_macos/lib
-includedir=/Users/runner/work/musescore_deps/musescore_deps/musescore_deps_macos/include
+libdir=/Users/runner/musescore_deps_macos/lib
+includedir=/Users/runner/musescore_deps_macos/include
 
 Name: sndfile
 Description: A library for reading and writing audio files
