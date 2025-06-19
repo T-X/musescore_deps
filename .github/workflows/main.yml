@@ -184,6 +184,9 @@ jobs:
           x86-brew install "${response##*Downloaded to: }"
           lipo -create $(brew --prefix glib)/lib/libglib-2.0.0.dylib $(./x86-homebrew/bin/brew --prefix glib)/lib/libglib-2.0.0.dylib -output /Users/runner/musescore_deps_macos/lib/libglib-2.0.0.dylib
           ln -s libglib-2.0.0.dylib /Users/runner/musescore_deps_macos/lib/libglib-2.0.dylib
+          cp -r /Users/runner/work/musescore_deps/x86-homebrew/include/glib-2.0 /Users/runner/musescore_deps_macos/include/
+          cp -r /Users/runner/work/musescore_deps/x86-homebrew/lib/glib-2.0/ /Users/runner/musescore_deps_macos/lib/
+          sed "s#^prefix=.*#prefix=/Users/runner/musescore_deps_macos#" /Users/runner/work/musescore_deps/x86-homebrew/lib/pkgconfig/glib-2.0.pc > /Users/runner/musescore_deps_macos/lib/pkgconfig/glib-2.0.pc
 
       #########################################################################
       # libInstPatch
@@ -197,13 +200,14 @@ jobs:
           rm build/libinstpatch-${LIBINSTPATCH_VERSION}.tar.gz
 
 #            -DCMAKE_EXE_LINKER_FLAGS="-L/Users/runner/work/musescore_deps/x86-homebrew/lib/" \
+# export PKG_CONFIG_PATH=/Users/runner/musescore_deps_macos/lib/pkgconfig:/Users/runner/work/musescore_deps/x86-homebrew/lib/pkgconfig:/usr/lib/pkgconfig
       - name: libinstpatch - Build
         run: |
           cd build/libinstpatch-${LIBINSTPATCH_VERSION}
           echo "~~~ env:"
           env
           echo "~~~ Calling cmake"
-          export PKG_CONFIG_PATH=/Users/runner/work/musescore_deps/x86-homebrew/lib/pkgconfig:/Users/runner/musescore_deps_macos/lib/pkgconfig:/usr/lib/pkgconfig
+          export PKG_CONFIG_PATH=/Users/runner/musescore_deps_macos/lib/pkgconfig:/usr/lib/pkgconfig
           cmake -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=../../../../../musescore_deps_macos \
